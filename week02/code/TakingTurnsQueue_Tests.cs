@@ -11,7 +11,7 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Bob (2), Tim (5), Sue (3) and
     // run until the queue is empty
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
-    // Defect(s) Found: 
+    // Defect(s) Found: The order is reversed, Sue, Tim, Bob is how things are being taking turns because the enqueue function always add on position 0
     public void TestTakingTurnsQueue_FiniteRepetition()
     {
         var bob = new Person("Bob", 2);
@@ -43,7 +43,7 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Bob (2), Tim (5), Sue (3)
     // After running 5 times, add George with 3 turns.  Run until the queue is empty.
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, George, Sue, Tim, George, Tim, George
-    // Defect(s) Found: 
+    // Defect(s) Found: After fixing the enqueue function it ran perfectly
     public void TestTakingTurnsQueue_AddPlayerMidway()
     {
         var bob = new Person("Bob", 2);
@@ -85,7 +85,7 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Bob (2), Tim (Forever), Sue (3)
     // Run 10 times.
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
-    // Defect(s) Found: 
+    // Defect(s) Found: Tim's  second turn never happened because of his "forever" (or 0) specific case never beeing enqueued back again.
     public void TestTakingTurnsQueue_ForeverZero()
     {
         var timTurns = 0;
@@ -94,7 +94,8 @@ public class TakingTurnsQueueTests
         var tim = new Person("Tim", timTurns);
         var sue = new Person("Sue", 3);
 
-        Person[] expectedResult = [bob, tim, sue, bob, tim, sue, tim, sue, tim, tim];
+        Person[] expectedResult = [bob, tim, sue, bob, tim, sue, tim, sue, tim, tim]; 
+        // 4 time when it was supposed to be tim, it took sue
 
         var players = new TakingTurnsQueue();
         players.AddPerson(bob.Name, bob.Turns);
@@ -116,7 +117,7 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Tim (Forever), Sue (3)
     // Run 10 times.
     // Expected Result: Tim, Sue, Tim, Sue, Tim, Sue, Tim, Tim, Tim, Tim
-    // Defect(s) Found: 
+    // Defect(s) Found: After fixing the enqueue missing part for 'forever' or 0 turns case, this test went well.
     public void TestTakingTurnsQueue_ForeverNegative()
     {
         var timTurns = -3;

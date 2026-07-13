@@ -22,3 +22,5 @@
         return stack.Count == 0;
     }
 }
+// if char is ( [ { add, if item is ) ] } then if stack is empty or stack pop is not ( [ { return false
+//the function verifies if text closes ( [ { 

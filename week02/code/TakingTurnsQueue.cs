@@ -44,8 +44,13 @@ public class TakingTurnsQueue
             {
                 person.Turns -= 1;
                 _people.Enqueue(person);
+                
             }
-
+            else if (person.Turns <= 0) //Added specific case for "forever" or 0 turns, so it is enqueued properly
+            {
+                _people.Enqueue(person);
+            }
+            
             return person;
         }
     }

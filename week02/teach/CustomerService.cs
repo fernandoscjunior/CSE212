@@ -11,11 +11,13 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Can I add a customer and serve it
+        // Expected Result: Display customer added
         Console.WriteLine("Test 1");
-
-        // Defect(s) Found: 
+        var service = new CustomerService(4);
+        service.AddNewCustomer();
+        service.ServeCustomer();
+        // Defect(s) Found: ServeCustomer function should serve before deleting it from the queue
 
         Console.WriteLine("=================");
 
@@ -88,9 +90,10 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
         var customer = _queue[0];
+        _queue.RemoveAt(0);
         Console.WriteLine(customer);
+        
     }
 
     /// <summary>
